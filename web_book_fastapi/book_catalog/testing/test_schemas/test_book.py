@@ -1,5 +1,6 @@
 from web_book_fastapi.book_catalog.schemas.book import Book, BookCreate, BookUpdate, BookPartialUpdate
 from unittest import TestCase
+from pydantic import ValidationError
 
 
 class BookCreateTestCase(TestCase):
@@ -54,6 +55,60 @@ class BookCreateTestCase(TestCase):
                             description='description',
                             pages=pages,
                         )
+
+    def test_book_slug_too_short_regex(self) -> None:
+        with self.assertRaisesRegex(
+            expected_exception=ValidationError,
+            expected_regex="string should have at least 3 characters",
+        ) as ex_info:
+            book_in = BookCreate(
+                slug='s',
+                title='title',
+                description='description',
+                pages=123,
+            )
+        print(ex_info.exception)
+
+    def test_book_slug_too_short(self):
+        with self.assertRaises(
+            expected_exception=ValidationError,
+        ) as ex_info:
+            book_in = BookCreate(
+                slug='s',
+                title='title',
+                description='description',
+                pages=123,
+            )
+        detail_type = ex_info.exception.errors()[0]
+        expected_type = "string_too_short"
+        self.assertEqual(expected_type, detail_type["type"])
+
+    def test_book_slug_too_long(self):
+        with self.assertRaises(
+            expected_exception=ValidationError,
+        ) as ex_info:
+            book_in = BookCreate(
+                slug='s' * 31,
+                title='title',
+                description='description',
+                pages=123,
+            )
+        detail_type = ex_info.exception.errors()[0]
+        expected_type = "string_too_long"
+        self.assertEqual(expected_type, detail_type["type"])
+
+    def test_book_slug_too_long_regex(self):
+        with self.assertRaisesRegex(
+            expected_exception=ValidationError,
+            expected_regex="string should have at most 30 characters",
+        ) as ex_info:
+            book_in = BookCreate(
+                slug='s' * 31,
+                title='title',
+                description='description',
+                pages=123,
+            )
+        print(ex_info.exception)
 
 
 class BookUpdateTestCase(TestCase):
