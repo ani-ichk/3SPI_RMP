@@ -5,11 +5,11 @@ from fastapi import (
     HTTPException,
 )
 
-from api.api_v1.books.crud import storage
-from api.api_v1.books.dependencies import (
+from web_book_fastapi.book_catalog.api.api_v1.books.crud import storage
+from web_book_fastapi.book_catalog.api.api_v1.books.dependencies import (
     user_auth_or_api_token_required,
 )
-from schemas.book import Book, BookCreate
+from web_book_fastapi.book_catalog.schemas.book import Book, BookCreate
 
 router = APIRouter(
     prefix="/books",

@@ -1,7 +1,7 @@
 import pytest
 from starlette.testclient import TestClient
 from fastapi import status
-from main import app
+from web_book_fastapi.book_catalog.main import app
 
 
 client = TestClient(app)

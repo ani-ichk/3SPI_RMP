@@ -1,6 +1,6 @@
 from .users_helper import AbstractUserHelper
 from redis import Redis
-from core import config
+from web_book_fastapi.book_catalog.core import config
 
 
 class RedisUsersHelper(AbstractUserHelper):

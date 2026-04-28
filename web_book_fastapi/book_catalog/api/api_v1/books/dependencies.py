@@ -14,11 +14,11 @@ from fastapi.security import (
 )
 
 from .crud import storage
-from api.api_v1.auth.services import (
+from web_book_fastapi.book_catalog.api.api_v1.auth.services import (
     redis_tokens,
     redis_users,
 )
-from schemas.book import Book
+from web_book_fastapi.book_catalog.schemas.book import Book
 
 UNSAFE_METHODS = frozenset(
     {

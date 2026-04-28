@@ -1,6 +1,6 @@
 from typing import Annotated
 from rich import print
-from api.api_v1.auth.services.redis_tokens_helper import redis_tokens
+from web_book_fastapi.book_catalog.api.api_v1.auth.services.redis_tokens_helper import redis_tokens
 from rich.markdown import Markdown
 
 

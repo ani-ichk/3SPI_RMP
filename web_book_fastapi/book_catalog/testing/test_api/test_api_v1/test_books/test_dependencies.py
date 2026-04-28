@@ -1,4 +1,4 @@
-from api.api_v1.books.dependencies import UNSAFE_METHODS
+from web_book_fastapi.book_catalog.api.api_v1.books.dependencies import UNSAFE_METHODS
 
 
 class TestUnsafeMethods:

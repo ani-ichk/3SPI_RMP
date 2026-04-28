@@ -1,13 +1,13 @@
 from pydantic import BaseModel
 from redis import Redis
 
-from schemas.book import (
+from web_book_fastapi.book_catalog.schemas.book import (
     Book,
     BookCreate,
     BookUpdate,
     BookPartialUpdate,
 )
-from core import config
+from web_book_fastapi.book_catalog.core import config
 
 redis = Redis(
     host=config.REDIS_HOST,
@@ -15,6 +15,12 @@ redis = Redis(
     db=config.REDIS_DB_BOOKS,
     decode_responses=True,
 )
+
+class BookBaseError(Exception):
+    pass
+
+class BookAlreadyExistsError(BookBaseError):
+    pass
 
 
 class BooksStorage(BaseModel):
@@ -75,6 +81,18 @@ class BooksStorage(BaseModel):
             setattr(book, field, value)
         self.save_book(book)
         return book
+
+    def exists(self, slug: str) -> bool:
+        return redis.hexists(
+            name=config.REDIS_HASH_NAME_BOOKS,
+            key=slug,
+        )
+
+    def create_or_raise_if_exists(self, book_in: BookCreate) -> Book:
+        if not self.exists(book_in.slug):
+            return self.create(book_in)
+
+        raise BookAlreadyExistsError(book_in.slug)
 
 
 storage = BooksStorage()

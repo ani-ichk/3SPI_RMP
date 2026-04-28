@@ -1,8 +1,11 @@
 from unittest import TestCase
 import random
+from collections.abc import Generator
+import pytest
 
-from api.api_v1.books.crud import storage
-from schemas.book import BookCreate, BookUpdate, Book
+from web_book_fastapi.book_catalog.api.api_v1.books.crud import storage, BookAlreadyExistsError
+from web_book_fastapi.book_catalog.api.api_v1.books.views.list_views import create_book
+from web_book_fastapi.book_catalog.schemas.book import BookCreate, BookUpdate, Book
 
 
 def total(num_a,num_b):
@@ -91,3 +94,18 @@ class BooksStorageGlobalTestcase(TestCase):
             with self.subTest(slug=book.slug):
                 found_book = storage.get_by_slug(book.slug)
                 self.assertIsInstance(found_book.title, book.title)
+
+
+def test_create_or_raise_if_exists(book: Book) -> None:
+    #existing_book = create_book()
+    book_create = BookCreate(**book.model_dump())
+    with pytest.raises(BookAlreadyExistsError) as exc_info:
+        storage.create_or_raise_if_exists(book_create)
+
+    assert exc_info.value.args[0] == book_create.slug
+
+@pytest.fixture()
+def book() -> Generator[Book]:
+    book = create_book()
+    yield book
+    storage.delete(book)

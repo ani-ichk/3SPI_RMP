@@ -1,7 +1,7 @@
 from redis import Redis
 
 from .tokens_helper import AbstractTokensHelper
-from core import config
+from web_book_fastapi.book_catalog.core import config
 
 
 class RedisTokensHelper(AbstractTokensHelper):

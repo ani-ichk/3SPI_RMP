@@ -1,5 +1,5 @@
 import unittest
-from api.api_v1.auth.services.redis_tokens_helper import redis_tokens
+from web_book_fastapi.book_catalog.api.api_v1.auth.services.redis_tokens_helper import redis_tokens
 
 
 class RedisTokensHelperTestCase(unittest.TestCase):
