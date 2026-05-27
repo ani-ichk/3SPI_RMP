@@ -13,7 +13,7 @@ from fastapi.security import (
     HTTPBasicCredentials,
 )
 
-from .crud import storage
+from dependencies.books import GetBooksStorage
 from web_book_fastapi.book_catalog.api.api_v1.auth.services import (
     redis_tokens,
     redis_users,
@@ -42,7 +42,10 @@ basic_user_auth = HTTPBasic(
 )
 
 
-def prefetch_book(slug: str) -> Book:
+def prefetch_book(
+        slug: str,
+        storage: GetBooksStorage,
+) -> Book:
     book = storage.get_by_slug(slug=slug)
     if book:
         return book

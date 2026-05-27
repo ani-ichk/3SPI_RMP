@@ -5,7 +5,7 @@ from fastapi import (
     HTTPException,
 )
 
-from web_book_fastapi.book_catalog.api.api_v1.books.crud import storage
+from storage.books.crud import storage
 from web_book_fastapi.book_catalog.api.api_v1.books.dependencies import (
     user_auth_or_api_token_required,
 )

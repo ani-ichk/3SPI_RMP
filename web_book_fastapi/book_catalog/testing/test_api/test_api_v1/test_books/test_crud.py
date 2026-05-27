@@ -3,7 +3,7 @@ import random
 from collections.abc import Generator
 import pytest
 
-from web_book_fastapi.book_catalog.api.api_v1.books.crud import storage, BookAlreadyExistsError
+from storage.books.crud import storage, BookAlreadyExistsError
 from web_book_fastapi.book_catalog.api.api_v1.books.views.list_views import create_book
 from web_book_fastapi.book_catalog.schemas.book import BookCreate, BookUpdate, Book
 

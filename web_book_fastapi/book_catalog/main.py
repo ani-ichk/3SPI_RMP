@@ -1,9 +1,14 @@
 import uvicorn
 from fastapi import FastAPI
-from web_book_fastapi.book_catalog.api.main_views import router as api_router
+
+from applifespan import lifespan
+from rest.main_views import router as api_router
 
 
-app = FastAPI(title='Books')
+app = FastAPI(
+    title='Books',
+    lifespan=lifespan,
+)
 
 app.include_router(api_router)
 

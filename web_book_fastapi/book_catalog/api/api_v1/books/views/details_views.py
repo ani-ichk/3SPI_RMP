@@ -6,7 +6,7 @@ from fastapi import (
     APIRouter,
 )
 
-from web_book_fastapi.book_catalog.api.api_v1.books.crud import storage
+from storage.books.crud import storage
 from web_book_fastapi.book_catalog.api.api_v1.books.dependencies import prefetch_book
 from web_book_fastapi.book_catalog.schemas.book import (
     Book,
