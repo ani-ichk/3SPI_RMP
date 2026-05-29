@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}
+    All books
+{% endblock %}
+{% block main %}
+    <h1>Books list</h1>
+    {% if books %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Slug</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Pages</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in books %}
+                <tr>
+                    <td><code>{{ book.slug }}</code></td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.description }}</td>
+                    <td>{{ book.page_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <h2>No books</h2>
+{% endif %}
+{% endblock %}
